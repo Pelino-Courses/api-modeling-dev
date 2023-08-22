@@ -5,7 +5,7 @@ from django.db import models
 class Speaker(models.Model):
     name = models.CharField(max_length=150)
     biography = models.TextField()
-    photo = models.ImageField(upload_to='speaker/logo/', blank=True)
+    photo = models.TextField(null=True, blank=True)
     email = models.EmailField()
     phone_number = models.CharField(max_length=20)
     linkedin = models.URLField(blank=True, null=True)
