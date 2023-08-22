@@ -13,8 +13,6 @@ from .serializer import EventSerializer
 def get_Event():
     pass
 
-
-
 @api_view(['POST']) 
 @csrf_exempt
 def create_Event(request):
