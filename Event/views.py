@@ -5,15 +5,21 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 
 from .serializer import EventSerializer
+from .models import Event
+from django.http import JsonResponse
 
 
 # Create your views here.
 
+@api_view(['GET']) 
+def get_Event(request):
+    events=Event.objects.all()
+    serializer=EventSerializer(events,many=True)    
+    return JsonResponse(serializer.data, safe=False)
 
-def get_Event():
-    pass
 
-@api_view(['POST']) 
+
+@api_view(['POST', 'GET']) 
 @csrf_exempt
 def create_Event(request):
     data = {

@@ -39,13 +39,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
   
     'speaker',
-    'drf_yasg'
     
     'Event',
     
     'rest_framework',
     
+    'drf_yasg',
+    
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
