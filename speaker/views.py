@@ -40,6 +40,13 @@ def get_speaker(request, id):
             return Response("Speaker deleted", status=403)
         except Speaker.DoesNotExist:
             return Response("Speaker not found", status=404)
+    
+    elif request.method == 'PATCH':
+        speaker = Speaker.objects.get(id=id)
+        serializer = SpeakerSerializer(instance=speaker, data=request.data, partial= True)
+        if serializer.is_valid():
+            serializer.save()
+        return Response(serializer.data, status=200)
         
     return Response(speaker.errors)
     
