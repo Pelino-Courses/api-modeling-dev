@@ -43,3 +43,28 @@ def get_single_event(request, event_id):
     event = Event.objects.get(id=event_id)
     serializer=EventSerializer(event,many=False)
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def EventDelete(request, pk):
+    event = Event.objects.get(id = pk)
+    event.delete()
+    return Response("task deleted successfully.")
+
+
+@api_view(['PUT']) 
+@csrf_exempt
+def update_single_event(request, event_id):
+    event =Event.objects.get(id=event_id)
+    data = {
+            'title': request.data.get('title'),
+            'description': request.data.get('description'),
+            'start_date': request.data.get('start_date'),
+            'end_date': request.data.get('end_date'),
+            'location':request.data.get('location'),
+            'is_free': request.data.get('is_free'),
+            'entry_fee': request.data.get('entry_fee'),
+        }
+    serializer=EventSerializer(instance=event,data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
