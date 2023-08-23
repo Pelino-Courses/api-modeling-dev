@@ -36,3 +36,10 @@ def create_Event(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET']) 
+def get_single_event(request, event_id):
+    event = Event.objects.get(id=event_id)
+    serializer=EventSerializer(event,many=False)
+    return Response(serializer.data)
