@@ -19,3 +19,9 @@ def speakers(request):
             speaker.save()
             return Response(speaker.data, status=201)
         return Response(speaker.errors)
+
+@api_view(['GET'])
+def get_speaker(request, id):
+    speaker = Speaker.objects.get(id=id)
+    serializer = SpeakerSerializer(speaker)
+    return Response(serializer.data, status=200)
