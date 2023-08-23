@@ -3,6 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.response import Response
 from .serializers import SpeakerSerializer
 from .models import Speaker
+import json
 
 @csrf_exempt
 
@@ -20,8 +21,26 @@ def speakers(request):
             return Response(speaker.data, status=201)
         return Response(speaker.errors)
 
-@api_view(['GET'])
+@api_view(['GET', 'DELETE', 'PATCH'])
 def get_speaker(request, id):
-    speaker = Speaker.objects.get(id=id)
-    serializer = SpeakerSerializer(speaker)
-    return Response(serializer.data, status=200)
+    # GET SPEAKER
+    if request.method == 'GET':
+        try:
+            speaker = Speaker.objects.get(id=id)
+            serializer = SpeakerSerializer(speaker)
+            return Response(serializer.data, status=200)
+
+        except Speaker.DoesNotExist:
+            return Response("Speaker not found", status=404)
+
+    # DELETE SPEAKER
+    elif request.method == 'DELETE':
+        try:
+            speaker = Speaker.objects.get(id=id).delete()
+            return Response("Speaker deleted", status=403)
+        except Speaker.DoesNotExist:
+            return Response("Speaker not found", status=404)
+        
+    return Response(speaker.errors)
+    
+
