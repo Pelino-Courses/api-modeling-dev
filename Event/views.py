@@ -19,7 +19,7 @@ def get_Event(request):
 
 
 
-@api_view(['POST', 'GET']) 
+@api_view(['POST']) 
 @csrf_exempt
 def create_Event(request):
     data = {
