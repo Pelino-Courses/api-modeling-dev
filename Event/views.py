@@ -28,11 +28,11 @@ def get_Event(request):
     properties={
         'title': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
         'description': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
-        'start_date': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
-        'end_date': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'start_date': openapi.Schema(type=openapi.TYPE_STRING, description='date',format='date'),
+        'end_date': openapi.Schema(type=openapi.TYPE_STRING, description='date',format='date'),
         'location': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
-        'is_free': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
-        'entry_fee': openapi.Schema(type=openapi.TYPE_STRING, description='number'),
+        'is_free': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='free or not free'),
+        'entry_fee': openapi.Schema(type=openapi.TYPE_NUMBER, description='enter amount'),
     }
 ))
 @api_view(['POST']) 
@@ -66,7 +66,18 @@ def EventDelete(request, pk):
     event.delete()
     return Response("task deleted successfully.")
 
-
+@swagger_auto_schema(method='put', request_body=openapi.Schema(
+    type=openapi.TYPE_OBJECT, 
+    properties={
+        'title': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'description': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'start_date': openapi.Schema(type=openapi.TYPE_STRING, description='date',format='date'),
+        'end_date': openapi.Schema(type=openapi.TYPE_STRING, description='date',format='date'),
+        'location': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'is_free': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='free or not free'),
+        'entry_fee': openapi.Schema(type=openapi.TYPE_NUMBER, description='enter amount'),
+    }
+))
 @api_view(['PUT']) 
 @csrf_exempt
 def update_single_event(request, event_id):
