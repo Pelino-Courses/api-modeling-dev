@@ -8,6 +8,9 @@ from .serializer import EventSerializer
 from .models import Event
 from django.http import JsonResponse
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 
 # Create your views here.
 
@@ -19,6 +22,19 @@ def get_Event(request):
 
 
 
+
+@swagger_auto_schema(method='post', request_body=openapi.Schema(
+    type=openapi.TYPE_OBJECT, 
+    properties={
+        'title': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'description': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'start_date': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'end_date': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'location': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'is_free': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+        'entry_fee': openapi.Schema(type=openapi.TYPE_STRING, description='number'),
+    }
+))
 @api_view(['POST']) 
 @csrf_exempt
 def create_Event(request):
