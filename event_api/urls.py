@@ -35,4 +35,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/speakers/', include('speaker.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+    ,
+    path('api/v1/',include([
+        path('event/',include('Event.urls')),
+    ]))
 ]
