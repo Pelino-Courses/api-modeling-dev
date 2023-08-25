@@ -4,9 +4,10 @@ from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 
-from .serializer import EventSerializer
-from .models import Event
+from .serializer import EventSerializer , CategoryEventSerializer
+from .models import Event , Category
 from django.http import JsonResponse
+
 
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
@@ -20,7 +21,32 @@ def get_Event(request):
     serializer=EventSerializer(events,many=True)    
     return JsonResponse(serializer.data, safe=False)
 
+@api_view(['GET']) 
+def get_Category(request):
+    events=Category.objects.all()
+    serializer=CategoryEventSerializer(events,many=True)    
+    return JsonResponse(serializer.data, safe=False)
 
+
+
+@swagger_auto_schema(method='post', request_body=openapi.Schema(
+    type=openapi.TYPE_OBJECT, 
+    properties={
+        'name': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
+
+    }
+))
+@api_view(['POST']) 
+@csrf_exempt
+def create_Category(request):
+    data = {
+            'name': request.data.get('name'),
+        }
+    serializer=CategoryEventSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @swagger_auto_schema(method='post', request_body=openapi.Schema(
@@ -33,8 +59,10 @@ def get_Event(request):
         'location': openapi.Schema(type=openapi.TYPE_STRING, description='string'),
         'is_free': openapi.Schema(type=openapi.TYPE_BOOLEAN, description='free or not free'),
         'entry_fee': openapi.Schema(type=openapi.TYPE_NUMBER, description='enter amount'),
-    }
+         'category': openapi.Schema(type=openapi.TYPE_NUMBER, description='enter amount'),
+    }    
 ))
+
 @api_view(['POST']) 
 @csrf_exempt
 def create_Event(request):
@@ -46,6 +74,7 @@ def create_Event(request):
             'location':request.data.get('location'),
             'is_free': request.data.get('is_free'),
             'entry_fee': request.data.get('entry_fee'),
+            'category':request.data.get('category'),
         }
     serializer=EventSerializer(data=data)
     if serializer.is_valid():
