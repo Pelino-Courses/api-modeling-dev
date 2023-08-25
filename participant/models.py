@@ -1,5 +1,5 @@
 from django.db import models
-from event.models import Event
+from Event.models import Event
 # Create your models here.
 class Participant(models.Model):
     id = models.BigAutoField(primary_key=True)

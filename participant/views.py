@@ -13,7 +13,7 @@ from drf_yasg import openapi
         'name': openapi.Schema(type=openapi.TYPE_STRING, description='Eric Ndungutse'),
         'email': openapi.Schema(type=openapi.TYPE_STRING, description='example@example.com'),
         'phone_number': openapi.Schema(type=openapi.TYPE_STRING, description='0785283007'),
-        'events': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING) description='1')
+        'events': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING), description='1')
     }
 ))
 @csrf_exempt
@@ -37,7 +37,7 @@ def participants(request):
         'name': openapi.Schema(type=openapi.TYPE_STRING, description='Eric Ndungutse'),
         'email': openapi.Schema(type=openapi.TYPE_STRING, description='example@example.com'),
         'phone_number': openapi.Schema(type=openapi.TYPE_STRING, description='0785283007'),
-        'events': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING) description='1')
+        'events': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Items(type=openapi.TYPE_STRING), description='1')
     }
 ))
 @api_view(['GET', 'DELETE', 'PATCH'])
